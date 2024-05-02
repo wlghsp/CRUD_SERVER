@@ -1,19 +1,13 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+	"CRUD_SERVER/init/cmd"
+	"flag"
 )
 
+var configPathFlag = flag.String("config", "./config.toml", "file not found")
+
 func main() {
-	http.HandleFunc("/", helloworld)
-
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		fmt.Println("에러가 떠버렸는데요??")
-		panic(err)
-	}
-}
-
-func helloworld(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Hello World")
+	flag.Parse()
+	cmd.NewCmd(*configPathFlag)
 }
