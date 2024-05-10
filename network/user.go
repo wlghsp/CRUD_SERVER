@@ -22,10 +22,11 @@ func newUserRouter(router *Network) *userRouter {
 			router: router,
 		}
 
-		userRouterInstance.router.engin.POST("/", userRouterInstance.create)
-		userRouterInstance.router.engin.PUT("/", userRouterInstance.update)
-		userRouterInstance.router.engin.DELETE("/", userRouterInstance.delete)
-		userRouterInstance.router.engin.GET("/", userRouterInstance.get)
+		router.registerGET("/", userRouterInstance.get)
+		router.registerPOST("/", userRouterInstance.create)
+		router.registerUPDATE("/", userRouterInstance.update)
+		router.registerDELETE("/", userRouterInstance.delete)
+
 	})
 
 	return userRouterInstance
@@ -36,10 +37,13 @@ func (u *userRouter) create(c *gin.Context) {
 }
 
 func (u *userRouter) get(c *gin.Context) {
+	fmt.Println("get 입니다. ")
 }
 
 func (u *userRouter) update(c *gin.Context) {
+	fmt.Println("update 입니다. ")
 }
 
 func (u *userRouter) delete(c *gin.Context) {
+	fmt.Println("delete 입니다. ")
 }
