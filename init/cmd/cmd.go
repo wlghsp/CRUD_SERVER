@@ -3,22 +3,26 @@ package cmd
 import (
 	"CRUD_SERVER/config"
 	"CRUD_SERVER/network"
-	"fmt"
+	"CRUD_SERVER/repository"
+	"CRUD_SERVER/service"
 )
 
 type Cmd struct {
-	config  *config.Config
-	network *network.Network
+	config *config.Config
+
+	network    *network.Network
+	repository repository.Repository
+	service    *service.Service
 }
 
 func NewCmd(filepath string) *Cmd {
-
-	fmt.Println("여기는 뜹니다.")
-
 	c := &Cmd{
-		config:  config.NewConfig(filepath),
-		network: network.NewNetwork(),
+		config: config.NewConfig(filepath),
 	}
+
+	c.repository = repository.NewRepository()
+	c.service = service.NewService(c.repository)
+	c.network = network.NewNetwork(c.service)
 
 	c.network.ServerStart(c.config.Server.Port)
 

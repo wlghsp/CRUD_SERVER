@@ -1,6 +1,7 @@
 package network
 
 import (
+	"CRUD_SERVER/service"
 	"CRUD_SERVER/types"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -14,13 +15,15 @@ var (
 
 type userRouter struct {
 	router *Network
-	// service
+
+	userService *service.User
 }
 
-func newUserRouter(router *Network) *userRouter {
+func newUserRouter(router *Network, userService *service.User) *userRouter {
 	userRouterInit.Do(func() {
 		userRouterInstance = &userRouter{
-			router: router,
+			router:      router,
+			userService: userService,
 		}
 
 		router.registerGET("/", userRouterInstance.get)
